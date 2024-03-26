@@ -38,10 +38,20 @@
 				return;
 			}
 			if (!isNumber(num) || num < 1 || num > result.playerBalls) {
-			return numberQuery();
+				return numberQuery();
 			}
 			return num;
 		};
+
+			// функция переводит данные из числа в строку Чётное или Нечётное
+			const getParityTest = (numBalls) => {
+				if ((numBalls % 2) === 0) {
+					numBallsChoice = 'чётное';
+				} else {
+					numBallsChoice = 'нечётное';
+				}
+				return numBallsChoice;
+			};
 
 		/* функция формирующая случайный ответ игроков Чётное
 или нечётное */
@@ -54,12 +64,24 @@
 			if (numBallsChoice === choice) {
 				alert(`У Бота шариков стало на ${numBalls} больше`);
 				result.playerBalls -= numBalls;
+				if (result.playerBalls < 0) {
+					result.playerBalls = 0;
+				}
 				result.botBalls += numBalls;
+				if (result.botBalls > 10) {
+					result.botBalls = 10;
+				}
 				result.bot++;
 			} else {
 				alert(`У Вас шариков стало на ${numBalls} больше`);
 				result.playerBalls += numBalls;
+				if (result.playerBalls > 10) {
+					result.playerBalls = 10;
+				}
 				result.botBalls -= numBalls;
+				if (result.botBalls < 0) {
+					result.botBalls = 0;
+				}
 				result.player++;
 			}
 			alert(`Шаров у бота : ${result.botBalls}
@@ -73,6 +95,7 @@
 			numBalls = numberQuery();
 			numBalls *= 1;
 			if (!isNumber(numBalls)) return;
+			numBallsChoice = getParityTest(numBalls);
 			choice = randomChoice(PARITY_SIGN);
 			alert(`Число ${choice}`);
 			compare(numBallsChoice, choice);
